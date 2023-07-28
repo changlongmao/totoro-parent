@@ -1,0 +1,63 @@
+package ${servicePackage};
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import ${voPackage}.${voName};
+import ${reqDTOPackage}.${reqDTOName};
+import ${entityPackage}.${entityName};
+import ${reqDTOPackage}.${pageReqDTOName};
+
+/**
+ * ${tableComment}Service接口
+ *
+ * @author ${author} ${date}
+ */
+public interface ${serviceName} extends IService<${entityName}> {
+
+    /**
+     * 查询所有列表
+     *
+     * @param $reqDTOAttrName 查询参数
+     * @return List
+     */
+    List<${voName}> queryAll($reqDTOName $reqDTOAttrName);
+
+    /**
+     * 分页查询${tableComment}
+     *
+     * @param $pageReqDTOAttrName 查询参数
+     * @return SPListVO
+     */
+    SPPageVO<${voName}> queryPage(${pageReqDTOName} $pageReqDTOAttrName);
+
+    /**
+     * 获取详情${tableComment}
+     *
+     * @param id 主键
+     * @return 新增结果
+     */
+    ${voName} info(${pk.attrType} id);
+
+    /**
+     * 新增${tableComment}
+     *
+     * @param ${reqDTOAttrName} ${tableComment}
+     * @return 新增结果
+     */
+    boolean add($reqDTOName $reqDTOAttrName);
+
+    /**
+     * 根据主键更新${tableComment}
+     *
+     * @param ${reqDTOAttrName} ${tableComment}
+     * @return 更新结果
+     */
+    boolean update($reqDTOName $reqDTOAttrName);
+
+    /**
+     * 根据主键删除${tableComment}
+     *
+     * @param id 主键
+     * @return 删除结果
+     */
+    boolean delete(${pk.attrType} id);
+}

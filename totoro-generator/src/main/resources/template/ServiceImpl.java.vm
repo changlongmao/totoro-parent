@@ -1,0 +1,63 @@
+package ${serviceImplPackage};
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import ${mapperPackage}.${mapperName};
+import ${entityPackage}.${entityName};
+import ${servicePackage}.${serviceName};
+import ${voPackage}.${voName};
+import ${reqDTOPackage}.${reqDTOName};
+import ${reqDTOPackage}.${pageReqDTOName};
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+
+/**
+ * ${tableComment}Service实现类
+ *
+ * @author ${author} ${date}
+ */
+@Service
+public class ${serviceImplName} extends ServiceImpl<${mapperName}, ${entityName}> implements ${serviceName} {
+
+    @Resource
+    private ${mapperName} ${mapperAttrName};
+
+    @Override
+    public List<${voName}> queryAll($reqDTOName reqDTO) {
+        QueryWrapper<$entityName> queryWrapper = new QueryWrapper<>(ObjectUtil.copy(reqDTO, ${entityName}.class));
+        List<$entityName> list = this.list(queryWrapper);
+        return ObjectUtil.copy(list, ${voName}.class);
+    }
+
+    @Override
+    public SPPageVO<${voName}> queryPage(${pageReqDTOName} reqDTO) {
+        Page<${entityName}> page = new Page<>(reqDTO.getPageIndex(), reqDTO.getPageSize());
+        // 防止sql注入，若删除此代码需自行防止sql注入
+        reqDTO.setSortColumn(ObjectUtil.objectContainColumn(reqDTO, reqDTO.getSortColumn()) ? reqDTO.getSortColumn() : null);
+        List<${entityName}> list = ${mapperAttrName}.selectHrpAbroadPage(page, reqDTO);
+        return SPPageVO.constructPage(reqDTO, page.getTotal(), list, ${voName}.class);
+    }
+
+    @Override
+    public ${voName} info(${pk.attrType} id) {
+        return ObjectUtil.copy(this.getById(id), ${voName}.class);
+    }
+
+    @Override
+    public boolean add($reqDTOName reqDTO) {
+        return this.save(ObjectUtil.copy(reqDTO, ${entityName}.class));
+    }
+
+    @Override
+    public boolean update($reqDTOName reqDTO) {
+        return this.updateById(ObjectUtil.copy(reqDTO, ${entityName}.class));
+    }
+
+    @Override
+    public boolean delete(${pk.attrType} id) {
+        return this.removeById(id);
+    }
+
+}

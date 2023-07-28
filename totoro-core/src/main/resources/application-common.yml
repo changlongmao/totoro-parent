@@ -1,0 +1,70 @@
+server:
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    accept-count: 5000
+    connection-timeout: 30000ms
+    threads:
+      min-spare: 50
+      max: 500
+  shutdown: graceful
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+      enabled: true
+  # jackson时间格式化
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 50
+      auto-commit: true
+      idle-timeout: 60000
+      pool-name: DatebookHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 60000
+      connection-test-query: SELECT 1
+  main:
+    allow-bean-definition-overriding: true
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  configuration:
+    #是否开启自动驼峰命名规则（camel case）映射
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+
+logging:
+  level:
+    org.totoro: DEBUG
+  file:
+    path: /var/javaLog/${spring.application.name}/${server.port}
+    name: ${logging.file.path}/info.log
+
+filter:
+  aesDecryptFilter:
+    enable: true
+    excludedUris: /actuator*
+  requestTrackFilter:
+    enable: true
+    excludedUris: /actuator*
+
+rsa:
+  publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnv3vxG9WG6e9pB+mV0Ilt2x1K1N2LhpWj5tfop/ovG9xqwwDhWi69pwbTQfoesEAU3WWHBbUvz2NCJwdjF46e52Qf1QaDh+MwNhlzoGDclKPWLu4vFBp8rlWgCgcqyNhGZY1H07MCtRbS3f4U6w8642YH/LNKXRd65ZVsbj70uYE/C6eV0pCaXdhVa5ArawO0Sh+nF6GZ9fWHTeepisbbDMc+/LW5i4ITCT7Sw0X/m0FR5EwkYk3GvvGEQNxcqa7+eAzSUFokVeTfwuzYRsgjLbYrME9BJvki10tgIuFHqRDSWmyHvbDqYLx5ndnLgT89tG2s/f9s5F+Oc42CSPV+QIDAQAB
+  privateKey: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCe/e/Eb1Ybp72kH6ZXQiW3bHUrU3YuGlaPm1+in+i8b3GrDAOFaLr2nBtNB+h6wQBTdZYcFtS/PY0InB2MXjp7nZB/VBoOH4zA2GXOgYNyUo9Yu7i8UGnyuVaAKByrI2EZljUfTswK1FtLd/hTrDzrjZgf8s0pdF3rllWxuPvS5gT8Lp5XSkJpd2FVrkCtrA7RKH6cXoZn19YdN56mKxtsMxz78tbmLghMJPtLDRf+bQVHkTCRiTca+8YRA3Fyprv54DNJQWiRV5N/C7NhGyCMttiswT0Em+SLXS2Ai4UepENJabIe9sOpgvHmd2cuBPz20baz9/2zkX45zjYJI9X5AgMBAAECggEAcMZCih1HALrMo1vny0EaK678tUywKSd5eseE4H94wCB0ihUtcjXFWCOGoe8YEepQZuKjJS10nmn0XcUOmIBGD2TGF+r5yEbMugVEwWPQbwjssM4GzVxkqkyYdLL/Es03lMSczaZAyPW0BCYGuKMVWyfGXfMFX4AxFmg+RJ+n0AE/Y1Ks/ZuZVPdWy1NtXIte2/dxd+3VFeE0ibce2EhdCtxJVSM11IJL9ZclSk1FlggroirvbtBNJ8l0HAZNzEzHBjcnRmENFUrjSJV357cC/Y2bXqNIoHKzaAXWoqXeY4GNTI3LZ1RYwlRyJVfWKmdAiMKusfwyweEHDf7w+roJ+QKBgQD6Ywd3Pd3bSYASgjuNwLf6t4ytXDOp6gBHeh4/Hu509nx7buxI7WqRZsR722lFvHoFBWPj7QjwT8OvV20KBMlXHS2CQiFh8kQH3/2rPjWnbubwuc5/Kbm8vUclr0BUXYVmOuMSfcGkLV4HOEva0LCvqZlupFoFHYbI8q64k+FXVwKBgQCijmRP56XKvnc/p+tSO7YEfFkeijJjqzfn7E+/HJS+lbwot/0OHGeEM51jxZRhVY48MfjdFRxCCQbVnNapPCIU2bZUNwBf2C84d867Mk+fcTq59sQ45Qf04gw2n+o0s2tc39puCcbFxYkLAf+PkX7Bi0cFdIuKWIpbJOFateJ7LwKBgD81AI15cKgKxenmNmJyY/9Glpysyd361Fc23KvSgx/DmWkPd1ZxmJVb+/3IRar1CVh7I9xF2hvQBvYce8orqyfylapsR0ESh1n1kXPJIIJD3MioHxi6z8h1f6BjvTmO4j4MX4YreNaZHUN1UrDKPdAaYEEt/AuOiJfxq2ms6xXBAoGAMKFUlSsByFOOrTZ5CdLfMxxYNPC2/mY8hV+Gw++y+Aknjy7rv4rz1PL0BOMY7r1/nbZ9cvZby82Tg9g1x887iu1OxIbnz8SG6+e7qvj0JQjkvrl6HmM2LCZr7POOR1Hdrp0xZXX7RzM/OlHQuIyYVSJrjtA85phyW63+1PpQ1PUCgYEAzfrqwJdrBEqPZ8RUReUZbzwbZhYvJQ7eBESuYalid5VSkBOE9+aScU4EMuaCt7+7rSpf7MmsMLzLrqN/SEvG7cMGEKZC9wzQCtGggp6F4jh9Q7tLa94grkl8d+R3QYJ+IcvKtVYQXtY/mJCYzlzT2W3bW3Oyj9OePWm4sbTL+eU=

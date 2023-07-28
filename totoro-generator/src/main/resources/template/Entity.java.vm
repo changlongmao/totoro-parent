@@ -1,0 +1,57 @@
+package ${entityPackage};
+
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Data;
+import lombok.experimental.Accessors;
+import lombok.EqualsAndHashCode;
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#end
+#if($logicDeleteColumn)
+import com.baomidou.mybatisplus.annotation.TableLogic;
+#end
+#if(${hasDate})
+import java.util.Date;
+#end
+
+/**
+ * ${tableComment}实体类
+ * <p>请不要手动修改该类</p>
+ *
+ * @author ${author} ${date}
+ */
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
+@TableName("${tableName}")
+public class ${entityName} extends Model<${entityName}> {
+
+#foreach ($column in $columns)
+#if($column.columnName == $pk.columnName)
+    /**
+     * $column.columnComment
+     */
+    @TableId
+    @TableField("$column.columnName")
+    private $column.attrType $column.attrName;
+
+#elseif($column.columnName.equalsIgnoreCase($logicDeleteColumn))
+    /**
+     * $column.columnComment
+     */
+    @TableLogic
+    @TableField("$column.formatColumnName")
+    private Boolean $logicDeleteProperty;
+
+#else
+    /**
+     * $column.columnComment
+     */
+    @TableField("$column.formatColumnName")
+    private $column.attrType $column.attrName;
+
+#end#end
+}

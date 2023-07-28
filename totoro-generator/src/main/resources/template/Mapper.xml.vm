@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="${mapperPackage}.${mapperName}">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="${entityPackage}.${entityName}">
+#foreach($column in $columns)
+#if($pk.columnName == $column.columnName)
+        <id column="${pk.columnName}" property="${pk.attrName}" />
+#elseif($column.columnName.equalsIgnoreCase($logicDeleteColumn))
+        <result column="$column.columnName" property="$logicDeleteProperty" />
+#else
+        <result column="$column.columnName" property="$column.attrName" />
+#end
+#end
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="ALLColumn">#foreach($column in $columns)#if($foreach.count == 1 || $foreach.count % 10 == 0)
+
+        `$column.columnName`#else`$column.columnName`#end#if($foreach.count != $columns.size()), #end#end
+    </sql>
+
+    <select id="select${className}Page" resultMap="BaseResultMap">
+        SELECT#foreach($column in $columns)#if($foreach.count == 1 || $foreach.count % 7 == 0)
+
+            t1.`$column.columnName`#else t1.`$column.columnName`#end#if($foreach.count != $columns.size()),#end#end
+        FROM `${tableName}` t1
+        WHERE#if($logicDeleteColumn) t1.`$logicDeleteColumn` = false #else true #end
+#foreach($column in $columns)
+    #if(!$column.columnName.equalsIgnoreCase($logicDeleteColumn))
+        <if test="params.$column.attrName != null"> AND t1.`$column.columnName` = #{params.$column.attrName} </if>
+#end
+#end
+        <if test="params.sortColumn != null and params.sortDirection != null">
+            order by concat('`',${params.sortColumn},'`') ${params.sortDirection.title}
+        </if>
+    </select>
+
+</mapper>

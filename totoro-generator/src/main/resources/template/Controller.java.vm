@@ -1,0 +1,92 @@
+package ${controllerPackage};
+
+import ${voPackage}.${voName};
+import ${reqDTOPackage}.${reqDTOName};
+import ${reqDTOPackage}.${pageReqDTOName};
+import ${servicePackage}.${serviceName};
+import org.springframework.web.bind.annotation.*;
+import org.totoro.generator.javabean.reqDto.Id${pk.attrType}ReqDTO;
+import javax.annotation.Resource;
+import javax.validation.Valid;
+
+/**
+ * ${tableComment}Controller层
+ *
+ * @author ${author} ${date}
+ */
+@RestController
+@RequestMapping("/${attrName}")
+public class ${controllerName} {
+
+    @Resource
+    private ${serviceName} ${serviceAttrName};
+
+    /**
+     * 查看所有列表
+     *
+     * @param $reqDTOAttrName 查询参数
+     * @return BaseRespDTO
+     */
+    @PostMapping("/queryAll")
+    public BaseRespDTO<List<${voName}>> queryAll(@Valid @RequestBody $reqDTOName $reqDTOAttrName) {
+        return BaseRespDTO.success(${serviceAttrName}.queryAll($reqDTOAttrName));
+    }
+
+    /**
+     * 分页查询${tableComment}
+     *
+     * @param $pageReqDTOAttrName 查询参数
+     * @return BaseRespDTO
+     */
+    @PostMapping("/queryPage")
+    public BaseRespDTO<SPPageVO<${voName}>> queryPage(@Valid @RequestBody ${pageReqDTOName} $pageReqDTOAttrName) {
+        return BaseRespDTO.success(${serviceAttrName}.queryPage($pageReqDTOAttrName));
+    }
+
+    /**
+     * 根据主键查询详情
+     *
+     * @param idReqDTO id
+     * @return BaseRespDTO
+     */
+    @GetMapping("/info")
+    public BaseRespDTO<${voName}> info(@Valid @RequestBody Id${pk.attrType}ReqDTO idReqDTO) {
+        return BaseRespDTO.success(${serviceAttrName}.info(idReqDTO.getId()));
+    }
+
+    /**
+     * 新增${tableComment}
+     *
+     * @param ${reqDTOAttrName} ${reqDTOAttrName}
+     * @return BaseRespDTO
+     */
+    @PostMapping("/add")
+    public BaseRespDTO<Void> add(@Valid @RequestBody $reqDTOName $reqDTOAttrName) {
+        ${serviceAttrName}.add(${reqDTOAttrName});
+        return BaseRespDTO.success();
+    }
+
+    /**
+     * 修改${tableComment}
+     *
+     * @param ${reqDTOAttrName} ${reqDTOAttrName}
+     * @return BaseRespDTO
+     */
+    @PostMapping("/update")
+    public BaseRespDTO<Void> update(@Valid @RequestBody $reqDTOName $reqDTOAttrName) {
+        ${serviceAttrName}.update(${reqDTOAttrName});
+        return BaseRespDTO.success();
+    }
+
+    /**
+     * 根据主键删除${tableComment}
+     *
+     * @param idReqDTO id
+     * @return BaseRespDTO
+     */
+    @PostMapping("/delete")
+    public BaseRespDTO<Void> delete(@Valid @RequestBody Id${pk.attrType}ReqDTO idReqDTO) {
+        ${serviceAttrName}.delete(idReqDTO.getId());
+        return BaseRespDTO.success();
+    }
+}

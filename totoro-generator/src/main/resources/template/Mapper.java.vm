@@ -1,0 +1,28 @@
+package ${mapperPackage};
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import ${entityPackage}.${entityName};
+import ${reqDTOPackage}.${pageReqDTOName};
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+/**
+ * ${tableComment}Mapper
+ *
+ * @author ${author} ${date}
+ */
+@Mapper
+public interface ${mapperName} extends BaseMapper<${entityName}> {
+
+    /**
+     * 自定义分页查询
+     *
+     * @param page   分页参数
+     * @param reqDTO 查询参数
+     * @return List
+     */
+    List<${entityName}> select${className}Page(Page<${entityName}> page, @Param("params") ${pageReqDTOName} reqDTO);
+}
