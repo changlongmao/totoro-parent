@@ -3,6 +3,7 @@ package ${serviceImplPackage};
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.totoro.common.util.ObjectUtil;
 import ${mapperPackage}.${mapperName};
 import ${entityPackage}.${entityName};
 import ${servicePackage}.${serviceName};
@@ -13,6 +14,7 @@ import org.totoro.common.javabean.vo.PageVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * ${tableComment}Service实现类

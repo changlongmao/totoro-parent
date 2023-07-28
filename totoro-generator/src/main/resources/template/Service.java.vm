@@ -7,6 +7,8 @@ import ${entityPackage}.${entityName};
 import ${reqDTOPackage}.${pageReqDTOName};
 import org.totoro.common.javabean.vo.PageVO;
 
+import java.util.List;
+
 /**
  * ${tableComment}Service接口
  *

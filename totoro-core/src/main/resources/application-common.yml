@@ -59,7 +59,7 @@ logging:
 
 filter:
   aesDecryptFilter:
-    enable: true
+    enable: false
     excludedUris: /actuator*
   requestTrackFilter:
     enable: true
