@@ -17,7 +17,7 @@ entity,dto,vo
 3. 手动新建一个springboot项目，修改pom.xml文件配置
 
 ```apache
-<parent>
+    <parent>
         <groupId>org.totoro</groupId>
         <artifactId>totoro-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
@@ -44,7 +44,7 @@ totoro-generator为代码生成器，为使用了velocity模板引擎生成代�
 
 可在test路径下创建代码生成启动类，根据需要自行修改配置，启动main方法即会生成对应的代码
 
-```
+```apache
 public class GeneratorCodeBoot {
 
     public static void main(String[] args) {
