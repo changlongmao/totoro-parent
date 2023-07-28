@@ -5,8 +5,8 @@ import org.totoro.generator.config.BaseConfig;
 import org.totoro.generator.config.GeneratorConfig;
 import org.totoro.generator.config.PackageConfig;
 import org.totoro.generator.constant.GenConstant;
-import org.totoro.generator.javabean.dto.ColumnDTO;
-import org.totoro.generator.javabean.dto.TableDTO;
+import org.totoro.generator.dto.ColumnDTO;
+import org.totoro.generator.dto.TableDTO;
 import org.totoro.generator.processor.VelocityProcessor;
 
 import java.util.Arrays;

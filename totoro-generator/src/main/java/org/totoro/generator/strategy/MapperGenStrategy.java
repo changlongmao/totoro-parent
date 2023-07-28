@@ -7,8 +7,8 @@ import org.totoro.generator.config.MapperConfig;
 import org.totoro.generator.config.PackageConfig;
 import org.totoro.generator.constant.GenConstant;
 import org.totoro.generator.enums.TemplateEnum;
-import org.totoro.generator.javabean.dto.ColumnDTO;
-import org.totoro.generator.javabean.dto.TableDTO;
+import org.totoro.generator.dto.ColumnDTO;
+import org.totoro.generator.dto.TableDTO;
 
 import java.io.File;
 import java.util.List;

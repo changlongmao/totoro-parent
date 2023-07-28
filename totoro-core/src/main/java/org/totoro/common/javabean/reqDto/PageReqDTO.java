@@ -1,8 +1,8 @@
-package org.totoro.generator.javabean.reqDto;
+package org.totoro.common.javabean.reqDto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.totoro.generator.enums.OrderDirectionEnum;
+import org.totoro.common.enums.OrderDirectionEnum;
 
 import javax.validation.constraints.Min;
 
@@ -13,7 +13,7 @@ import javax.validation.constraints.Min;
  */
 @Data
 @Accessors(chain = true)
-public class SPPageReqDTO {
+public class PageReqDTO {
 
     /**
      * 页码
@@ -41,7 +41,7 @@ public class SPPageReqDTO {
      */
     private String ids;
 
-    public SPPageReqDTO() {
+    public PageReqDTO() {
         this.pageIndex = 1;
         this.pageSize = 10;
     }

@@ -2,13 +2,13 @@ package org.totoro.generator.processor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.totoro.common.util.ValidatorUtils;
 import org.totoro.generator.config.BaseConfig;
 import org.totoro.generator.config.GeneratorConfig;
 import org.totoro.generator.factory.GeneratorSingletonFactory;
-import org.totoro.generator.javabean.dto.ColumnDTO;
-import org.totoro.generator.javabean.dto.TableDTO;
+import org.totoro.generator.dto.ColumnDTO;
+import org.totoro.generator.dto.TableDTO;
 import org.totoro.generator.strategy.GeneratorStrategy;
-import org.totoro.generator.util.ValidatorUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

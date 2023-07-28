@@ -1,4 +1,4 @@
-package org.totoro.generator.javabean.dto;
+package org.totoro.generator.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

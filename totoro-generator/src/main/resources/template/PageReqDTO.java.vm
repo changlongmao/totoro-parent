@@ -3,6 +3,7 @@ package ${reqDTOPackage};
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.EqualsAndHashCode;
+import org.totoro.common.javabean.reqDto.PageReqDTO;
 #if(${hasBigDecimal})
 #end
 #if(${hasDate})
@@ -18,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class ${pageReqDTOName} extends SPPageReqDTO {
+public class ${pageReqDTOName} extends PageReqDTO {
 
 #foreach ($column in $columns)
     /**

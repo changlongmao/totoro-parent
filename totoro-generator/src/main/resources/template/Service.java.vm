@@ -5,6 +5,7 @@ import ${voPackage}.${voName};
 import ${reqDTOPackage}.${reqDTOName};
 import ${entityPackage}.${entityName};
 import ${reqDTOPackage}.${pageReqDTOName};
+import org.totoro.common.javabean.vo.PageVO;
 
 /**
  * ${tableComment}Service接口
@@ -25,9 +26,9 @@ public interface ${serviceName} extends IService<${entityName}> {
      * 分页查询${tableComment}
      *
      * @param $pageReqDTOAttrName 查询参数
-     * @return SPListVO
+     * @return ListVO
      */
-    SPPageVO<${voName}> queryPage(${pageReqDTOName} $pageReqDTOAttrName);
+    PageVO<${voName}> queryPage(${pageReqDTOName} $pageReqDTOAttrName);
 
     /**
      * 获取详情${tableComment}

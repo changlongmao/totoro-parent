@@ -7,8 +7,8 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.springframework.util.CollectionUtils;
 import org.totoro.generator.config.BaseConfig;
 import org.totoro.generator.enums.JdbcTypeEnum;
-import org.totoro.generator.javabean.dto.ColumnDTO;
-import org.totoro.generator.javabean.dto.TableDTO;
+import org.totoro.generator.dto.ColumnDTO;
+import org.totoro.generator.dto.TableDTO;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;

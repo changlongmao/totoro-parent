@@ -2,15 +2,15 @@ package org.totoro.generator.strategy;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.VelocityContext;
+import org.totoro.common.util.StringUtil;
 import org.totoro.generator.config.BaseConfig;
 import org.totoro.generator.config.EntityConfig;
 import org.totoro.generator.config.GeneratorConfig;
 import org.totoro.generator.config.PackageConfig;
 import org.totoro.generator.constant.GenConstant;
 import org.totoro.generator.enums.TemplateEnum;
-import org.totoro.generator.javabean.dto.ColumnDTO;
-import org.totoro.generator.javabean.dto.TableDTO;
-import org.totoro.generator.util.StringUtil;
+import org.totoro.generator.dto.ColumnDTO;
+import org.totoro.generator.dto.TableDTO;
 
 import java.io.File;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.totoro.generator.enums;
+package org.totoro.common.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

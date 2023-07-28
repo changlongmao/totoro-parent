@@ -5,9 +5,10 @@ import ${reqDTOPackage}.${reqDTOName};
 import ${reqDTOPackage}.${pageReqDTOName};
 import ${servicePackage}.${serviceName};
 import org.springframework.web.bind.annotation.*;
-import org.totoro.generator.javabean.reqDto.Id${pk.attrType}ReqDTO;
+import org.totoro.common.javabean.reqDto.Id${pk.attrType}ReqDTO;
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import org.totoro.common.javabean.vo.PageVO;
 
 /**
  * ${tableComment}Controller层
@@ -39,7 +40,7 @@ public class ${controllerName} {
      * @return BaseRespDTO
      */
     @PostMapping("/queryPage")
-    public BaseRespDTO<SPPageVO<${voName}>> queryPage(@Valid @RequestBody ${pageReqDTOName} $pageReqDTOAttrName) {
+    public BaseRespDTO<PageVO<${voName}>> queryPage(@Valid @RequestBody ${pageReqDTOName} $pageReqDTOAttrName) {
         return BaseRespDTO.success(${serviceAttrName}.queryPage($pageReqDTOAttrName));
     }
 
