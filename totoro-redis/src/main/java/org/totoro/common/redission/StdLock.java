@@ -1,10 +1,10 @@
-package org.totoro.common.util;
+package org.totoro.common.redission;
 
 import lombok.extern.slf4j.Slf4j;
+import org.totoro.common.exception.CommonApiException;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
-import org.totoro.common.exception.CommonApiException;
 
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;

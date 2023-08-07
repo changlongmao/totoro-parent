@@ -1,4 +1,4 @@
-package org.totoro.common.config;
+package org.totoro.common.redission;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;

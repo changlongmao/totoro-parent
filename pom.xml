@@ -10,6 +10,7 @@
     <modules>
         <module>totoro-core</module>
         <module>totoro-generator</module>
+        <module>totoro-redis</module>
     </modules>
 
     <parent>

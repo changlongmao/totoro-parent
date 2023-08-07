@@ -1,8 +1,7 @@
 package org.totoro.common.aspect;
 
 import lombok.extern.slf4j.Slf4j;
-import org.totoro.common.annotation.RedisCache;
-import org.totoro.common.constant.RedisKeyConstant;
+import org.totoro.common.redission.RedisKeyConstant;
 import org.totoro.common.util.StringUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;

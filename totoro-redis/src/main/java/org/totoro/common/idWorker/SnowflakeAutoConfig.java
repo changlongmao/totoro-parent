@@ -6,7 +6,7 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.totoro.common.constant.RedisKeyConstant;
+import org.totoro.common.redission.RedisKeyConstant;
 
 import javax.annotation.Resource;
 

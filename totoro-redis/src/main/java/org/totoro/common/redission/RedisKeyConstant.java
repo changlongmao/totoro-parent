@@ -1,4 +1,4 @@
-package org.totoro.common.constant;
+package org.totoro.common.redission;
 
 /**
  * redis key变量管理
@@ -7,7 +7,7 @@ package org.totoro.common.constant;
 public interface RedisKeyConstant {
 
 
-    String SERVICE_NAME = "totoro-common-redis:";
+    String SERVICE_NAME = "zdwp-java-common-redis:";
 
     /*------------------------------------------ Aspect start ------------------------------------------*/
 

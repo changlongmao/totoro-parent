@@ -1,7 +1,5 @@
 package org.totoro.common.annotation;
 
-import org.totoro.common.aspect.RedisLockAspect;
-
 import java.lang.annotation.*;
 
 /**
