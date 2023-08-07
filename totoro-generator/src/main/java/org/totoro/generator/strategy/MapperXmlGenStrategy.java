@@ -26,8 +26,10 @@ public class MapperXmlGenStrategy implements GeneratorStrategy{
 
         VelocityContext context = initVelocityContext(baseConfig, tableDTO);
         context.put("columns", columnDTOList);
-        context.put("logicDeleteColumn", entityConfig.getLogicDeleteColumnName());
-        context.put("logicDeleteProperty", entityConfig.getLogicDeletePropertyName());
+        if (columnDTOList.stream().anyMatch(c -> c.getColumnName().equalsIgnoreCase(entityConfig.getLogicDeleteColumnName()))) {
+            context.put("logicDeleteColumn", entityConfig.getLogicDeleteColumnName());
+            context.put("logicDeleteProperty", entityConfig.getLogicDeletePropertyName());
+        }
         return context;
     }
 

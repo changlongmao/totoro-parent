@@ -15,11 +15,9 @@ import java.util.Arrays;
 @AllArgsConstructor
 public enum OrderDirectionEnum {
 
-    NONE(1, ""),
+    ASC(1, "asc"),
 
-    ASC(2, "asc"),
-
-    DESC(3, "desc"),
+    DESC(2, "desc"),
 
     ;
 
