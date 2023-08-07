@@ -2,6 +2,7 @@ package org.totoro.common.aspect;
 
 import jodd.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.totoro.common.annotation.RedisLock;
 import org.totoro.common.exception.CommonApiException;
 import org.totoro.common.redission.RedisKeyConstant;
 import org.totoro.common.util.IpUtils;
