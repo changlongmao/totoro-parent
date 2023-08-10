@@ -56,7 +56,7 @@ public class VOGenStrategy implements GeneratorStrategy {
     @Override
     public String getPathname(PackageConfig packageConfig, String className) {
         return packageConfig.getJavaFileDir() + File.separator + (packageConfig.getParentPackage() + "." + packageConfig.getVoPackage())
-                .replaceAll("\\.", "/")
+                .replaceAll("\\.", File.separator)
                 + File.separator + className + GenConstant.VO_SUFFIX + GenConstant.JAVA_SUFFIX;
     }
 

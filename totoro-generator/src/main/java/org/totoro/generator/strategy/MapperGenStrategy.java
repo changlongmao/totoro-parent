@@ -37,7 +37,7 @@ public class MapperGenStrategy implements GeneratorStrategy {
     @Override
     public String getPathname(PackageConfig packageConfig, String className) {
         return packageConfig.getJavaFileDir() + File.separator + (packageConfig.getParentPackage() + "." + packageConfig.getMapperPackage())
-                .replaceAll("\\.", "/")
+                .replaceAll("\\.", File.separator)
                 + File.separator + className + GenConstant.MAPPER_SUFFIX + GenConstant.JAVA_SUFFIX;
     }
 

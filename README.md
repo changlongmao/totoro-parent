@@ -13,7 +13,6 @@ entity,dto,vo
 2. 将代码安装到maven本地仓库
 
    `mvn clean install`
-
 3. 手动新建一个springboot项目，修改pom.xml文件配置
 
 ```apache
