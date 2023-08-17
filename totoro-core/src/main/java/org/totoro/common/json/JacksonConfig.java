@@ -20,8 +20,6 @@ public class JacksonConfig {
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper om = JsonUtils.createObjectMapper();
-        // 反序列化时，忽略Javabean中Collection属性对应JSON Array中的为null的元素
-        om.registerModule(new IgnoreCollectionNullElementDeserializeModule());
         // 反序列化时，trim所有字符串
         om.registerModule(stringTrimModule());
         return om;

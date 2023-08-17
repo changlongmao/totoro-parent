@@ -2,11 +2,8 @@ package org.totoro.common.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.google.common.collect.Lists;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.totoro.common.exception.JsonException;
 
@@ -30,17 +27,16 @@ public class JsonUtils {
     private static final ObjectMapper om = createObjectMapper();
 
     public static ObjectMapper createObjectMapper() {
-        ObjectMapper om = new ObjectMapper();
-
-        // 反序列化时，忽略Javabean中Collection属性对应JSON Array中的为null的元素
-        om.registerModule(new IgnoreCollectionNullElementDeserializeModule());
-
-        // 反序列化时，忽略Javabean中不存在的属性，而不是抛出异常
-        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        // 忽略入参没有任何属性导致的序列化报错
-        om.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-
-        return om;
+        return JsonMapper.builder()
+                // 反序列化时，忽略Javabean中Collection属性对应JSON Array中的为null的元素
+                .addModule(new IgnoreCollectionNullElementDeserializeModule())
+                // 忽略字段名的大小写
+                .enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES)
+                // 反序列化时，忽略Javabean中不存在的属性，而不是抛出异常
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                // 忽略入参没有任何属性导致的序列化报错
+                .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
+                .build();
     }
 
     private JsonUtils() {
@@ -51,13 +47,6 @@ public class JsonUtils {
      * 将对象转化为JSON
      */
     public static String toJson(Object object) {
-        return toJson(object, om);
-    }
-
-    /**
-     * 将对象转化为JSON
-     */
-    public static String toJson(Object object, ObjectMapper om) {
         try {
             return om.writeValueAsString(object);
         } catch (JsonProcessingException e) {
@@ -70,13 +59,6 @@ public class JsonUtils {
      * 将对象转化为JSON，结果是美化的
      */
     public static String toJsonPrettily(Object object) {
-        return toJsonPrettily(object, om);
-    }
-
-    /**
-     * 将对象转化为JSON，结果是美化的
-     */
-    public static String toJsonPrettily(Object object, ObjectMapper om) {
         try {
             return om.writerWithDefaultPrettyPrinter().writeValueAsString(object);
         } catch (JsonProcessingException e) {
@@ -104,19 +86,24 @@ public class JsonUtils {
      * @throws JsonException 任何原因转化失败时，抛出这个异常，如果需要补偿处理，可以进行捕获
      */
     public static <T> T toObject(String json, Class<T> clazz) {
-        return toObject(json, clazz, om);
-    }
-
-    /**
-     * 将JSON转化为对象
-     *
-     * @throws JsonException 任何原因转化失败时，抛出这个异常，如果需要补偿处理，可以进行捕获
-     */
-    public static <T> T toObject(String json, Class<T> clazz, ObjectMapper om) {
         try {
             return om.readValue(json, clazz);
         } catch (IOException e) {
             log.error("json={}, clazz={}", json, clazz, e);
+            throw new JsonException(e);
+        }
+    }
+
+    /**
+     * 将JSON转化为对象, 支持泛型
+     *
+     * @throws JsonException 任何原因转化失败时，抛出这个异常，如果需要补偿处理，可以进行捕获
+     */
+    public static <T> T toObject(String json, TypeReference<T> valueTypeRef) {
+        try {
+            return om.readValue(json, valueTypeRef);
+        } catch (IOException e) {
+            log.error("json={}, valueTypeRef={}", json, valueTypeRef, e);
             throw new JsonException(e);
         }
     }
@@ -127,49 +114,10 @@ public class JsonUtils {
      * @throws JsonException 任何原因转化失败时，抛出这个异常，如果需要补偿处理，可以进行捕获
      */
     public static <T> List<T> toListOfObject(String json, Class<T> clazz) {
-        return toListOfObject(json, clazz, om);
-    }
-
-    /**
-     * 将JSON转化为对象列表
-     *
-     * @throws JsonException 任何原因转化失败时，抛出这个异常，如果需要补偿处理，可以进行捕获
-     */
-
-    public static <T> List<T> toListOfObject(String json, Class<T> clazz, ObjectMapper om) {
         try {
-            @SuppressWarnings("unchecked") Class<T[]> arrayClass = (Class<T[]>) Class
-                    .forName("[L" + clazz.getName() + ";");
-            return Lists.newArrayList(om.readValue(json, arrayClass));
-        } catch (IOException | ClassNotFoundException e) {
-            log.error("json={}, clazz={}", json, clazz, e);
-            throw new JsonException(e);
-        }
-    }
-
-    /**
-     * JSON -> 参数化的对象
-     * <p>
-     * 示例： Collection<<User<UserAddress>> users = JsonUtils.toParameterizedObject(text);
-     *
-     * @throws JsonException 任何原因转化失败时，抛出这个异常，如果需要补偿处理，可以进行捕获
-     */
-    public static <T> T toParameterizedObject(String json, TypeReference<T> typeReference) {
-        return toParameterizedObject(json, typeReference, om);
-    }
-
-    /**
-     * JSON -> 参数化的对象
-     * <p>
-     * 示例： Collection<<User<UserAddress>> users = JsonUtils.toParameterizedObject(text);
-     *
-     * @throws JsonException 任何原因转化失败时，抛出这个异常，如果需要补偿处理，可以进行捕获
-     */
-    public static <T> T toParameterizedObject(String json, TypeReference<T> typeReference, ObjectMapper om) {
-        try {
-            return om.readValue(json, typeReference);
+            return om.readValue(json, new TypeReference<List<T>>(){});
         } catch (IOException e) {
-            log.error("json={}, typeReference={}", json, typeReference, e);
+            log.error("json={}, clazz={}", json, clazz, e);
             throw new JsonException(e);
         }
     }
@@ -182,17 +130,6 @@ public class JsonUtils {
      * @throws JsonException 任何原因转化失败时，抛出这个异常，如果需要补偿处理，可以进行捕获
      */
     public static JsonNode toTree(String json) {
-        return toTree(json, om);
-    }
-
-    /**
-     * JSON -> JsonNode对象
-     *
-     * <strong>除非JSON对应数据结构在运行时是变化的，否则不建议使这个方法</strong>
-     *
-     * @throws JsonException 任何原因转化失败时，抛出这个异常，如果需要补偿处理，可以进行捕获
-     */
-    public static JsonNode toTree(String json, ObjectMapper om) {
         try {
             return om.readTree(json);
         } catch (IOException e) {

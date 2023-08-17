@@ -39,6 +39,11 @@ public interface CommonConstant {
     /**
      * SqlInjectAspect拦截顺序，值越小越早执行
      */
+    int AUTH_TOKEN_ASPECT_ORDER = 3000;
+
+    /**
+     * SqlInjectAspect拦截顺序，值越小越早执行
+     */
     int SQL_INJECT_ASPECT_ORDER = 5000;
 
     /**
@@ -53,5 +58,19 @@ public interface CommonConstant {
 
     /*------------------------------------------ Aspect end ------------------------------------------*/
 
+    /**
+     * aesKey
+     */
+    String AES_KEY = "AesKey";
+
+    /**
+     * token前缀
+     */
+    String BEARER = "bearer ";
+
+    /**
+     * token请求头
+     */
+    String AUTHORIZATION = "Authorization";
 
 }

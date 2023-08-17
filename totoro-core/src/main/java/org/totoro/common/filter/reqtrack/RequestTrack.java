@@ -4,6 +4,7 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 import com.google.common.collect.Maps;
 import lombok.Builder;
 import lombok.Data;
+import org.totoro.common.javabean.dto.JwtClaimDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,6 +50,11 @@ public class RequestTrack implements Serializable {
      * 完整的URL
      */
     private final String fullUrl;
+
+    /**
+     * jwt参数
+     */
+    private JwtClaimDTO jwtClaimDTO;
 
     private final transient HttpServletRequest rawRequest;
 
