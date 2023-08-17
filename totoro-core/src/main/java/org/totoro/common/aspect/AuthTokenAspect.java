@@ -4,8 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.totoro.common.annotation.IgnoreAuthToken;
 import org.totoro.common.constant.CommonConstant;
 import org.totoro.common.exception.AuthException;
 import org.totoro.common.filter.reqtrack.RequestTrack;
@@ -37,6 +39,12 @@ public class AuthTokenAspect {
      **/
     @Around("@annotation(net.zdwp.common.annotation.AuthToken) || @within(net.zdwp.common.annotation.AuthToken)")
     public Object doAround(ProceedingJoinPoint point) throws Throwable {
+        MethodSignature signature = (MethodSignature) point.getSignature();
+        IgnoreAuthToken ignoreAuthToken = signature.getMethod().getAnnotation(IgnoreAuthToken.class);
+        // 若方法上有ignoreAuthToken注解则跳过
+        if (ignoreAuthToken != null) {
+            return point.proceed();
+        }
         RequestTrack requestTrack = RequestTrack.getCurrent();
 
         String bearerToken = requestTrack.getRawRequest().getHeader(CommonConstant.AUTHORIZATION);
