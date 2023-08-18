@@ -65,7 +65,7 @@ public class EntityGenStrategy implements GeneratorStrategy {
     @Override
     public String getPathname(PackageConfig packageConfig, String className) {
         return packageConfig.getJavaFileDir() + File.separator + (packageConfig.getParentPackage() + "." + packageConfig.getEntityPackage())
-                .replaceAll("\\.", File.separator)
+                .replace(".", File.separator)
                 + File.separator + className + GenConstant.ENTITY_SUFFIX + GenConstant.JAVA_SUFFIX;
     }
 

@@ -37,7 +37,7 @@ public class ServiceGenStrategy implements GeneratorStrategy {
     @Override
     public String getPathname(PackageConfig packageConfig, String className) {
         return packageConfig.getJavaFileDir() + File.separator + (packageConfig.getParentPackage() + "." + packageConfig.getServicePackage())
-                .replaceAll("\\.", File.separator)
+                .replace(".", File.separator)
                 + File.separator + className + GenConstant.SERVICE_SUFFIX + GenConstant.JAVA_SUFFIX;
     }
 

@@ -53,7 +53,7 @@ public class PageReqDTOGenStrategy implements GeneratorStrategy {
     @Override
     public String getPathname(PackageConfig packageConfig, String className) {
         return packageConfig.getJavaFileDir() + File.separator + (packageConfig.getParentPackage() + "." + packageConfig.getReqDTOPackage())
-                .replaceAll("\\.", File.separator)
+                .replace(".", File.separator)
                 + File.separator + className + GenConstant.PAGE_REQ_DTO_SUFFIX + GenConstant.JAVA_SUFFIX;
     }
 
