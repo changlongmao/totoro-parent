@@ -37,7 +37,7 @@ public class AuthTokenAspect {
      * @author ChangLF 2023/8/16 09:52
      * @return java.lang.Object
      **/
-    @Around("@annotation(net.zdwp.common.annotation.AuthToken) || @within(net.zdwp.common.annotation.AuthToken)")
+    @Around("@annotation(org.totoro.common.annotation.AuthToken) || @within(org.totoro.common.annotation.AuthToken)")
     public Object doAround(ProceedingJoinPoint point) throws Throwable {
         MethodSignature signature = (MethodSignature) point.getSignature();
         IgnoreAuthToken ignoreAuthToken = signature.getMethod().getAnnotation(IgnoreAuthToken.class);

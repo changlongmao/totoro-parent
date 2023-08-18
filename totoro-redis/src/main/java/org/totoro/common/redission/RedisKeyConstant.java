@@ -7,7 +7,7 @@ package org.totoro.common.redission;
 public interface RedisKeyConstant {
 
 
-    String SERVICE_NAME = "zdwp-java-common-redis:";
+    String SERVICE_NAME = "totoro-parent-redis:";
 
     /*------------------------------------------ Aspect start ------------------------------------------*/
 
