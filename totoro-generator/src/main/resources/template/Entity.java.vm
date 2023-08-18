@@ -34,8 +34,7 @@ public class ${entityName} extends Model<${entityName}> {
     /**
      * $column.columnComment
      */
-    @TableId
-    @TableField("$column.columnName")
+    @TableId("$column.columnName")
     private $column.attrType $column.attrName;
 
 #elseif($column.columnName.equalsIgnoreCase($logicDeleteColumn))
