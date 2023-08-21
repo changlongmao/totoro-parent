@@ -4,6 +4,7 @@ import ${voPackage}.${voName};
 import ${reqDTOPackage}.${reqDTOName};
 import ${reqDTOPackage}.${pageReqDTOName};
 import ${servicePackage}.${serviceName};
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.totoro.common.javabean.reqDto.Id${pk.attrType}ReqDTO;
 import javax.annotation.Resource;
@@ -18,6 +19,7 @@ import java.util.List;
  *
  * @author ${author} ${date}
  */
+@Slf4j
 @RestController
 @RequestMapping("/${attrName}")
 public class ${controllerName} {

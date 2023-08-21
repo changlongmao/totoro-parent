@@ -3,6 +3,7 @@ package ${serviceImplPackage};
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.totoro.common.util.ObjectUtil;
 import ${mapperPackage}.${mapperName};
 import ${entityPackage}.${entityName};
@@ -12,6 +13,7 @@ import ${reqDTOPackage}.${reqDTOName};
 import ${reqDTOPackage}.${pageReqDTOName};
 import org.totoro.common.javabean.vo.PageVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,7 +23,9 @@ import java.util.List;
  *
  * @author ${author} ${date}
  */
+@Slf4j
 @Service
+@Transactional(rollbackFor = Throwable.class)
 public class ${serviceImplName} extends ServiceImpl<${mapperName}, ${entityName}> implements ${serviceName} {
 
     @Resource
