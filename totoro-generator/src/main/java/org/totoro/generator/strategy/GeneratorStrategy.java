@@ -1,6 +1,7 @@
 package org.totoro.generator.strategy;
 
 import org.apache.velocity.VelocityContext;
+import org.totoro.common.util.StringUtil;
 import org.totoro.generator.config.BaseConfig;
 import org.totoro.generator.config.GeneratorConfig;
 import org.totoro.generator.config.PackageConfig;
@@ -77,26 +78,37 @@ public interface GeneratorStrategy {
         context.put("author", baseConfig.getAuthor());
         context.put("date", baseConfig.getGeneratorDate());
         context.put("pk", tableDTO.getPk());
+
         PackageConfig packageConfig = baseConfig.getPackageConfig();
         String parentPackage = packageConfig.getParentPackage();
-        context.put("controllerPackage", parentPackage + "." + packageConfig.getControllerPackage());
+        if (StringUtil.isNotEmpty(parentPackage)) {
+            parentPackage = parentPackage + ".";
+        }
+        context.put("controllerPackage", parentPackage + packageConfig.getControllerPackage());
         context.put("controllerName", className + GenConstant.CONTROLLER_SUFFIX);
-        context.put("serviceImplPackage", parentPackage + "." + packageConfig.getServiceImplPackage());
+
+        context.put("serviceImplPackage", parentPackage + packageConfig.getServiceImplPackage());
         context.put("serviceImplName", className + GenConstant.SERVICE_IMPL_SUFFIX);
-        context.put("servicePackage", parentPackage + "." + packageConfig.getServicePackage());
+
+        context.put("servicePackage", parentPackage + packageConfig.getServicePackage());
         context.put("serviceName", className + GenConstant.SERVICE_SUFFIX);
         context.put("serviceAttrName", attrName + GenConstant.SERVICE_SUFFIX);
-        context.put("mapperPackage", parentPackage + "." + packageConfig.getMapperPackage());
+
+        context.put("mapperPackage", parentPackage + packageConfig.getMapperPackage());
         context.put("mapperName", className + GenConstant.MAPPER_SUFFIX);
         context.put("mapperAttrName", attrName + GenConstant.MAPPER_SUFFIX);
-        context.put("entityPackage", parentPackage + "." + packageConfig.getEntityPackage());
+
+        context.put("entityPackage", parentPackage + packageConfig.getEntityPackage());
         context.put("entityName", className + (className.endsWith("Entity") ? "" : GenConstant.ENTITY_SUFFIX));
-        context.put("voPackage", parentPackage + "." + packageConfig.getVoPackage());
+
+        context.put("voPackage", parentPackage + packageConfig.getVoPackage());
         context.put("voName", className + GenConstant.VO_SUFFIX);
         context.put("voAttrName", attrName + GenConstant.VO_SUFFIX);
-        context.put("reqDTOPackage", parentPackage + "." + packageConfig.getReqDTOPackage());
+
+        context.put("reqDTOPackage", parentPackage + packageConfig.getReqDTOPackage());
         context.put("reqDTOName", className + GenConstant.REQ_DTO_SUFFIX);
         context.put("reqDTOAttrName", attrName + GenConstant.REQ_DTO_SUFFIX);
+
         context.put("pageReqDTOName", className + GenConstant.PAGE_REQ_DTO_SUFFIX);
         context.put("pageReqDTOAttrName", attrName + GenConstant.PAGE_REQ_DTO_SUFFIX);
         return context;
