@@ -2,8 +2,8 @@ package org.totoro.generator.strategy;
 
 import org.apache.velocity.VelocityContext;
 import org.totoro.generator.config.BaseConfig;
-import org.totoro.generator.config.EntityConfig;
-import org.totoro.generator.config.GeneratorConfig;
+import org.totoro.generator.config.EntityConfigFactory;
+import org.totoro.generator.config.GeneratorConfigFactory;
 import org.totoro.generator.config.PackageConfig;
 import org.totoro.generator.constant.GenConstant;
 import org.totoro.generator.enums.JdbcTypeEnum;
@@ -24,8 +24,8 @@ public class ReqDTOGenStrategy implements GeneratorStrategy {
 
     @Override
     public VelocityContext getVelocityContext(BaseConfig baseConfig, Map.Entry<TableDTO, List<ColumnDTO>> tableDTOListEntry,
-                                              GeneratorConfig... generatorConfigArr) {
-        EntityConfig entityConfig = (EntityConfig) getConfig(EntityConfig.class, generatorConfigArr);
+                                              GeneratorConfigFactory... generatorConfigFactoryArr) {
+        EntityConfigFactory entityConfig = (EntityConfigFactory) getConfig(EntityConfigFactory.class, generatorConfigFactoryArr);
         TableDTO tableDTO = tableDTOListEntry.getKey();
         List<ColumnDTO> columnDTOList = tableDTOListEntry.getValue();
 

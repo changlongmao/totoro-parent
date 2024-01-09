@@ -3,7 +3,7 @@ package org.totoro.generator.strategy;
 import org.apache.velocity.VelocityContext;
 import org.totoro.common.util.StringUtil;
 import org.totoro.generator.config.BaseConfig;
-import org.totoro.generator.config.GeneratorConfig;
+import org.totoro.generator.config.GeneratorConfigFactory;
 import org.totoro.generator.config.PackageConfig;
 import org.totoro.generator.constant.GenConstant;
 import org.totoro.generator.dto.ColumnDTO;
@@ -16,56 +16,62 @@ import java.util.Map;
 
 /**
  * 生成代码策略父类
+ *
  * @author ChangLF 2023/07/21
  */
 public interface GeneratorStrategy {
 
     /**
      * 获取替换模板上下文
-     * @param baseConfig 基础配置
-	 * @param tableDTOListEntry 表信息
-	 * @param generatorConfigArr 其他各种配置
-     * @author ChangLF 2023/7/25 08:54
+     *
+     * @param baseConfig         基础配置
+     * @param tableDTOListEntry  表信息
+     * @param generatorConfigFactoryArr 其他各种配置
      * @return org.apache.velocity.VelocityContext 替换模板的上下文
+     * @author ChangLF 2023/7/25 08:54
      **/
     VelocityContext getVelocityContext(BaseConfig baseConfig, Map.Entry<TableDTO, List<ColumnDTO>> tableDTOListEntry,
-                                       GeneratorConfig... generatorConfigArr);
+                                       GeneratorConfigFactory... generatorConfigFactoryArr);
 
     /**
      * 获取模板所在文件的路径名称，需在classpath下
-     * @author ChangLF 2023/7/25 08:57
+     *
      * @return java.lang.String
+     * @author ChangLF 2023/7/25 08:57
      **/
     String getTemplate();
 
     /**
      * 获取要生成的文件全路径名称
+     *
      * @param packageConfig 基础配置
-	 * @param className 生成的文件类名
-     * @author ChangLF 2023/7/25 08:58
+     * @param className     生成的文件类名
      * @return java.lang.String
+     * @author ChangLF 2023/7/25 08:58
      **/
     String getPathname(PackageConfig packageConfig, String className);
 
     /**
      * 生成代码执行器，调用
-     * @param baseConfig 基础配置
-	 * @param tableDTOListEntry 表信息
-	 * @param generatorConfigArr 生成的配置文件
+     *
+     * @param baseConfig         基础配置
+     * @param tableDTOListEntry  表信息
+     * @param generatorConfigFactoryArr 生成的配置文件
      * @author ChangLF 2023/7/25 08:59
      **/
     default void execute(BaseConfig baseConfig, Map.Entry<TableDTO, List<ColumnDTO>> tableDTOListEntry,
-                         GeneratorConfig... generatorConfigArr) {
-        VelocityProcessor.process(this.getVelocityContext(baseConfig, tableDTOListEntry, generatorConfigArr),
+                         GeneratorConfigFactory... generatorConfigFactoryArr) {
+        VelocityProcessor.process(this.getVelocityContext(baseConfig, tableDTOListEntry, generatorConfigFactoryArr),
                 this.getTemplate(), this.getPathname(baseConfig.getPackageConfig(), tableDTOListEntry.getKey().getClassName()));
     }
 
     /**
      * 初始化通用VelocityContext配置
+     *
      * @param baseConfig 基础配置
-	 * @param tableDTO 表信息
-     * @author ChangLF 2023/7/26 15:41
+     * @param tableDTO   表信息
      * @return org.apache.velocity.VelocityContext
+     * @author ChangLF 2023/7/26 15:41
      **/
     default VelocityContext initVelocityContext(BaseConfig baseConfig, TableDTO tableDTO) {
         VelocityContext context = new VelocityContext();
@@ -116,12 +122,13 @@ public interface GeneratorStrategy {
 
     /**
      * 从配置数组中获取目标配置
-     * @param classT 目标配置class
-	 * @param generatorConfigArr 配置数组
-     * @author ChangLF 2023/7/25 09:00
+     *
+     * @param classT             目标配置class
+     * @param generatorConfigFactoryArr 配置数组
      * @return org.totoro.generator.config.GeneratorConfig
+     * @author ChangLF 2023/7/25 09:00
      **/
-    default GeneratorConfig getConfig(Class<? extends GeneratorConfig> classT, GeneratorConfig... generatorConfigArr) {
-        return Arrays.stream(generatorConfigArr).filter(c -> classT.equals(c.getClass())).findFirst().orElse(null);
+    default GeneratorConfigFactory getConfig(Class<? extends GeneratorConfigFactory> classT, GeneratorConfigFactory... generatorConfigFactoryArr) {
+        return Arrays.stream(generatorConfigFactoryArr).filter(c -> classT.equals(c.getClass())).findFirst().orElse(null);
     }
 }

@@ -2,8 +2,8 @@ package org.totoro.generator.strategy;
 
 import org.apache.velocity.VelocityContext;
 import org.totoro.generator.config.BaseConfig;
-import org.totoro.generator.config.GeneratorConfig;
-import org.totoro.generator.config.MapperConfig;
+import org.totoro.generator.config.GeneratorConfigFactory;
+import org.totoro.generator.config.MapperConfigFactory;
 import org.totoro.generator.config.PackageConfig;
 import org.totoro.generator.constant.GenConstant;
 import org.totoro.generator.enums.TemplateEnum;
@@ -22,8 +22,8 @@ import java.util.Map;
 public class MapperGenStrategy implements GeneratorStrategy {
 
     @Override
-    public VelocityContext getVelocityContext(BaseConfig baseConfig, Map.Entry<TableDTO, List<ColumnDTO>> tableDTOListEntry, GeneratorConfig... generatorConfigArr) {
-        MapperConfig config = (MapperConfig) getConfig(MapperConfig.class, generatorConfigArr);
+    public VelocityContext getVelocityContext(BaseConfig baseConfig, Map.Entry<TableDTO, List<ColumnDTO>> tableDTOListEntry, GeneratorConfigFactory... generatorConfigFactoryArr) {
+        MapperConfigFactory config = (MapperConfigFactory) getConfig(MapperConfigFactory.class, generatorConfigFactoryArr);
         TableDTO tableDTO = tableDTOListEntry.getKey();
 
         return initVelocityContext(baseConfig, tableDTO);

@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 @Builder
-public class MapperConfig implements GeneratorConfig {
+public class MapperConfigFactory implements GeneratorConfigFactory {
 
     @Override
     public List<Class<? extends GeneratorStrategy>> getStrategy() {

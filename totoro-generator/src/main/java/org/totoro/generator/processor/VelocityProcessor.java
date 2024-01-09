@@ -22,6 +22,7 @@ import java.util.Properties;
 public class VelocityProcessor {
 
     static {
+        // 初始化配置，默认加载classpath下模版文件
         Properties prop = new Properties();
         prop.put("resource.loader.file.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         Velocity.init(prop);
@@ -35,7 +36,8 @@ public class VelocityProcessor {
     /**
      * Velocity替换模版
      * @param velocityContext 替换的内容
-	 * @param templateName 模版名称
+	 * @param templateName classpath下模版文件名称，例：template/Entity.java.vm
+	 * @param pathname 要生成的文件全路径名称
      * @author ChangLF 2023/7/24 08:37
      **/
     public static void process(VelocityContext velocityContext, String templateName, String pathname) {
@@ -44,6 +46,7 @@ public class VelocityProcessor {
         }
 
         StringWriter sw = new StringWriter();
+        // 执行模版内容与velocityContext变量上下文替换
         Template template = Velocity.getTemplate(templateName, "UTF-8");
         template.merge(velocityContext, sw);
         File file = new File(pathname);
@@ -58,10 +61,6 @@ public class VelocityProcessor {
         } catch (IOException e) {
             log.warn("{}生成失败", pathname, e);
         }
-    }
-
-    public static boolean isFileOverride() {
-        return FILE_OVERRIDE;
     }
 
     public static void setFileOverride(boolean fileOverride) {

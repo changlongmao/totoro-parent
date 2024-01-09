@@ -4,7 +4,6 @@ import com.google.common.collect.Sets;
 import org.totoro.generator.config.*;
 import org.totoro.generator.processor.GeneratorProcessor;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -46,18 +45,18 @@ public class GeneratorCodeBoot {
                         .build())
                 .build();
         // entity配置，必须有
-        EntityConfig entityConfig = EntityConfig.builder()
+        EntityConfigFactory entityConfig = EntityConfigFactory.builder()
                 .logicDeleteColumnName("is_delete")
                 .logicDeletePropertyName("deleteFlag")
                 .build();
         // mapper配置，必须有
-        MapperConfig mapperConfig = MapperConfig.builder()
+        MapperConfigFactory mapperConfig = MapperConfigFactory.builder()
                 .build();
         // 可没有，若没有则不生成对应代码
-        ServiceConfig serviceConfig = ServiceConfig.builder()
+        ServiceConfigFactory serviceConfig = ServiceConfigFactory.builder()
                 .build();
         // 可没有，若没有则不生成对应代码
-        ControllerConfig controllerConfig = ControllerConfig.builder()
+        ControllerConfigFactory controllerConfig = ControllerConfigFactory.builder()
                 .build();
 
         // 生成代码，不填写config则不生成对应的代码

@@ -18,9 +18,9 @@ import java.util.Map;
 public class MapperXmlGenStrategy implements GeneratorStrategy{
 
     @Override
-    public VelocityContext getVelocityContext(BaseConfig baseConfig, Map.Entry<TableDTO, List<ColumnDTO>> tableDTOListEntry, GeneratorConfig... generatorConfigArr) {
-        MapperConfig config = (MapperConfig) getConfig(MapperConfig.class, generatorConfigArr);
-        EntityConfig entityConfig = (EntityConfig) getConfig(EntityConfig.class, generatorConfigArr);
+    public VelocityContext getVelocityContext(BaseConfig baseConfig, Map.Entry<TableDTO, List<ColumnDTO>> tableDTOListEntry, GeneratorConfigFactory... generatorConfigFactoryArr) {
+        MapperConfigFactory config = (MapperConfigFactory) getConfig(MapperConfigFactory.class, generatorConfigFactoryArr);
+        EntityConfigFactory entityConfig = (EntityConfigFactory) getConfig(EntityConfigFactory.class, generatorConfigFactoryArr);
         TableDTO tableDTO = tableDTOListEntry.getKey();
         List<ColumnDTO> columnDTOList = tableDTOListEntry.getValue();
 

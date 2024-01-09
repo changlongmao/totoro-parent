@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 @Builder
-public class EntityConfig implements GeneratorConfig {
+public class EntityConfigFactory implements GeneratorConfigFactory {
 
     /**
      * 逻辑删除字段名(数据库)
