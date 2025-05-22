@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -47,9 +48,8 @@ public class GeneratorProcessor {
         InformationSchemaProcessor.decorate(tableColumnMap);
 
         // 根据配置获取代码生成策略
-        List<GeneratorStrategy> strategyList = new ArrayList<>();
-        Stream.of(generatorConfigFactoryArr).map(GeneratorConfigFactory::getStrategy)
-                .forEach(list -> list.forEach(s -> strategyList.add(GeneratorSingletonFactory.getBean(s))));
+        List<GeneratorStrategy> strategyList = Stream.of(generatorConfigFactoryArr).flatMap(config -> config.getStrategy().stream())
+                .map(GeneratorSingletonFactory::getBean).collect(Collectors.toList());
 
         // 按表顺序生成代码，若中间失败则前面生成的表仍成功
         for (Map.Entry<TableDTO, List<ColumnDTO>> tableDTOListEntry : tableColumnMap.entrySet()) {

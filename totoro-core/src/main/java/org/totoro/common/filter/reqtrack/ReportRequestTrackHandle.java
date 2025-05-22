@@ -77,9 +77,9 @@ public class ReportRequestTrackHandle {
     }
 
     private static Collection<String> convertToCurlLines(RequestTrack requestTrack, ContentCachingRequestWrapper request) {
+        String urlParams = getUrlParams(request);
         final Collection<String> result = Lists.newArrayList();
-        result.add(
-                "curl --location --request " + requestTrack.getHttpMethod() + " '" + requestTrack.getFullUrl() + "'");
+        result.add("curl --location --request " + requestTrack.getHttpMethod() + " '" + requestTrack.getFullUrl() + urlParams + "'");
         String rawJson = JsonUtils.compressJson(getRawRequestBody(request));
         result.add("--data-raw '" + rawJson + "'");
         getRequestHeaders(request).forEach((k, v) -> {
@@ -89,6 +89,21 @@ public class ReportRequestTrackHandle {
             result.add("--header '" + k + ": " + v + "'");
         });
         return result;
+    }
+
+    private static String getUrlParams(HttpServletRequest request) {
+        Enumeration<String> enumeration = request.getParameterNames();
+        StringJoiner sj = new StringJoiner("&", "?", "");
+        while (enumeration.hasMoreElements()) {
+            String parameter = enumeration.nextElement();
+            sj.add(parameter + "=" + request.getParameter(parameter));
+        }
+        String urlParams = sj.toString();
+        if ("?".equals(urlParams)) {
+            return "";
+        }
+
+        return urlParams;
     }
 
     private static Map<String, String> getRequestHeaders(HttpServletRequest request) {
